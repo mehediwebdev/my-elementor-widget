@@ -107,8 +107,9 @@
      */
 
      public function init(){
-      add_action('elementor/init', [ $this, 'init_category'] );
+    //  add_action('elementor/init', [ $this, 'init_category'] );
       add_action('elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
+      add_action( 'elementor/elements/categories_registered', [ $this, 'init_category' ] );
      }
 
      /**
@@ -128,9 +129,9 @@
 
        public function init_category(){
           Elementor\Plugin::instance()->elements_manager->add_category(
-            'myew-for-elementor',
+            'myew-for-elementor-category',
             [
-               'title' => esc_html__( 'My Elementor Widget', 'my-elementor-widget' ),
+               'title' => esc_html__( 'My Elementor Widget Category', 'my-elementor-widget' ),
             ]
           );
        }

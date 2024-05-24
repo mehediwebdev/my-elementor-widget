@@ -27,9 +27,9 @@ class MYEW_Example_Widget extends  Widget_Base{
      * @access public
      */
 
-     public function get_script_depends(){
-        'myew-script';
-     }
+    // public function get_script_depends(){
+        //'myew-script';
+     //}
 
 
     /**
@@ -55,35 +55,60 @@ class MYEW_Example_Widget extends  Widget_Base{
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		//return [ 'myew-for-elementor' ];
+		return [ 'myew-for-elementor-category' ];
 
-    return [ 'basic' ];
+    //return [ 'basic' ];
 	}
 
 
 
-    public function _register_controls() {
+    public function register_controls() {
       //Controls
 
       $this->start_controls_section(
-        'content_section',
+        'section_title',
         [
-            'label' => esc_html__( 'Content', 'elementor-oembed-widget' ),
-            'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+          'label' => esc_html__( 'Title', 'elementor-addon' ),
+          'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
         ]
-    );
-
-    // $this->add_control(
-    //     'url',
-    //     [
-    //         'label' => esc_html__( 'URL to embed', 'elementor-oembed-widget' ),
-    //         'type' => \Elementor\Controls_Manager::TEXT,
-    //         'input_type' => 'url',
-    //         'placeholder' => esc_html__( 'https://your-link.com', 'elementor-oembed-widget' ),
-    //     ]
-    // );
-
-    $this->end_controls_section();
+      );
+  
+      $this->add_control(
+        'title',
+        [
+          'label' => esc_html__( 'Title', 'elementor-addon' ),
+          'type' => \Elementor\Controls_Manager::TEXTAREA,
+          'default' => esc_html__( 'Hello world', 'elementor-addon' ),
+        ]
+      );
+  
+      $this->end_controls_section();
+  
+      // Content Tab End
+  
+  
+      // Style Tab Start
+  
+      $this->start_controls_section(
+        'section_title_style',
+        [
+          'label' => esc_html__( 'Title', 'elementor-addon' ),
+          'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+        ]
+      );
+  
+      $this->add_control(
+        'title_color',
+        [
+          'label' => esc_html__( 'Text Color', 'elementor-addon' ),
+          'type' => \Elementor\Controls_Manager::COLOR,
+          'selectors' => [
+            '{{WRAPPER}} .hello-world' => 'color: {{VALUE}};',
+          ],
+        ]
+      );
+  
+      $this->end_controls_section();
 
       //Style tab
       $this->style_tab();
@@ -95,15 +120,29 @@ class MYEW_Example_Widget extends  Widget_Base{
     }
 
     protected function render(){
-      $myew_value = $this->get_settings_for_display();
+    	$settings = $this->get_settings_for_display();
 
-      ?>
-		    <p> Hello World </p>
-		 <?php
+		if ( empty( $settings['title'] ) ) {
+			return;
+		}
+		?>
+		<p class="hello-world">
+			<?php echo $settings['title']; ?>
+		</p>
+		<?php
     }
     
     protected function content_template(){
-        
+      ?>
+      <#
+      if ( '' === settings.title ) {
+        return;
+      }
+      #>
+      <p class="hello-world">
+        {{ settings.title }}
+      </p>
+      <?php
     }
 
 
