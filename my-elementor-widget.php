@@ -84,15 +84,22 @@
      */
 
      public function scripts_styles(){
-       // wp_register_style( 'myew-style', MYEW_PLUGIN_URL .  'assets/dist/css/public.min.css', [], rand(), 'all' );
-       // wp_register_script('myew-script', MYEW_PLUGIN_URL . 'assets/dist/js/public.min.js' [ 'jquery' ],  rand(), true);
+     // wp_register_style('myew-style', MYEW_PLUGIN_URL . '/assets/source/css/public.min.css', [], rand(), false);
+     // wp_register_script('myew-script', MYEW_PLUGIN_URL . 'assets/source/js/public.min.js', ['jquery'], rand(), true);
+
+    // wp_enqueue_style('myew-style', MYEW_PLUGIN_URL . '/assets/source/css/public.min.css', [], rand(), 'all'), false);
+
+     wp_enqueue_style('main-styles', MYEW_PLUGIN_URL . '/assets/source/css/public.min.css', array(), false);
         
-        // wp_register_style( 'myew-style' );
-         //wp_register_script( 'myew-script' );
+      //   wp_register_style('myew-style');
+        // wp_register_script( 'myew-script' );
      }
 
 
-
+//    add_action('elementor/editor/before_enqueue_scripts', function() {
+//       wp_enqueue_style( 'myew-style', MYEW_PLUGIN_URL . '/assets/source/css/public.min.css', [], rand(), 'all');
+//      // wp_enqueue_script( ... );
+//   });
     /**
     * Load plugin textdomain
     *@since 1.0.0
@@ -120,6 +127,7 @@
       public function init_widgets(){
         // require_once MYEW_PLUGIN_PATH . '/widgets/example.php';
         require_once( __DIR__ . '/widgets/example.php' );
+        require_once( __DIR__ . '/widgets/preview-card.php' );
       }
 
       /**
